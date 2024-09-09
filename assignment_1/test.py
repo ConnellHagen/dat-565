@@ -33,6 +33,9 @@ for i in years:
     frac_pop.loc[frac_pop["year"] == i, "65+"] = age_65_plus.iloc[i - 1860] / total_pop.loc[total_pop["year"] == i, "population"]
 
 plt.scatter([i for i in years], [dep_ratio.loc[dep_ratio["year"] == i, "dep_ratio"] for i in years])
+plt.title("Dependency Ratio in Sweden 1860-2022")
+plt.xlabel("Year")
+plt.ylabel("Dependency Ratio")
     
 plt.show()
 
@@ -40,5 +43,8 @@ plt.scatter([i for i in years], [frac_pop.loc[frac_pop["year"] == i, "0_14"] for
 plt.scatter([i for i in years], [frac_pop.loc[frac_pop["year"] == i, "15_64"] for i in years], color = "green", label = "15 - 64")
 plt.scatter([i for i in years], [frac_pop.loc[frac_pop["year"] == i, "65+"] for i in years], color = "blue", label = "65+")
 plt.legend()
+plt.title("Age Group Populations in Sweden 1860-2022")
+plt.xlabel("Year")
+plt.ylabel("Percentage of Population")
 
 plt.show()
