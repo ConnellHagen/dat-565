@@ -6,7 +6,7 @@ df = pd.read_csv("assignment_1/swedish_population_by_year_and_sex_1860-2022.csv"
 
 df.loc[df["age"] == "110+", "age"] = "110"
 
-years = [i for i in years]
+years = [i for i in range(1860, 2023)]
 
 age_0_to_14 =  df[df["age"].astype(int) <= 14].sum().drop(["age", "sex"], axis="index")
 age_15_to_64 = df[(df["age"].astype(int) > 14) & (df["age"].astype(int) < 65)].sum().drop(["age", "sex"], axis="index")
