@@ -24,6 +24,12 @@ closing_prices = df_2022["Closing Price"]
 boareas = df_2022["Living Area"].str.split("+").str[0].astype("float64")
 rooms = df_2022["Rooms"]
 
+plt.scatter(closing_prices, boareas, s = 20)
+plt.title("Price and Boarea of Houses Sold in Kungälv in 2022")
+plt.xlabel("Price in Tens of Millions of SEK")
+plt.ylabel("Boarea in m²")
+plt.show()
+
 plt.scatter(closing_prices[(rooms <= 2)], boareas[(rooms <= 2)], s = 20, color = 'red', label = '0 - 2')
 plt.scatter(closing_prices[(rooms <= 4) & (rooms > 2)], boareas[(rooms <= 4) & (rooms > 2)], s = 20, color = 'orange', label = '3 - 4')
 plt.scatter(closing_prices[(rooms <= 6) & (rooms > 4)], boareas[(rooms <= 6) & (rooms > 4)], s = 20, color = '#FFD700', label = '5 - 6')
