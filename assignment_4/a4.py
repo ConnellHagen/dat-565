@@ -146,3 +146,7 @@ predictions = ln.predict(df_test[[*newvars]])
 mse = mean_squared_error(df_test[LEB], predictions)
 print(mse)
 print(f"{s}: mse:{mse}, intercept: {ln.intercept_}, coeff: {ln.coef_}")
+
+r2_test = r2_score(df_test[LEB], predictions)
+df_test2 = pd.DataFrame({"leb": df_test[LEB], "pred": predictions})
+pearson = df_test2.corr(method='pearson', min_periods=1, numeric_only=False)
