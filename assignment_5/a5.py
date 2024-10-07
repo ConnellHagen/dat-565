@@ -26,9 +26,12 @@ for i in range(1,8):
     inertia += [kmeans.inertia_]
 
 # elbow plot
-# plt.scatter(range(1, len(inertia) + 1), inertia)
-# plt.plot(range(1, len(inertia) + 1), inertia)
-# plt.show()
+plt.scatter(range(1, len(inertia) + 1), inertia)
+plt.plot(range(1, len(inertia) + 1), inertia)
+plt.xlabel("Number of Means in k-means")
+plt.ylabel("Inertia")
+plt.title("\"Elbow Plot\" of Inertia by k")
+plt.show()
 
 color_map = {
     1: "red",
@@ -40,26 +43,35 @@ for i in range(1, 7 + 1):
     for j in range(1, 7 + 1):
         if (j <= i):
             continue
-        # plt.subplot(7, 7, (i - 1) * 7 + j)
-        # plt.scatter(df.iloc[:, i - 1], df.iloc[:, j - 1], c=df["label"].map(color_map), s=1)
-# plt.show()
+        plt.subplot(7, 7, (i - 1) * 7 + j)
+        plt.scatter(df.iloc[:, i - 1], df.iloc[:, j - 1], c=df["label"].map(color_map), s=1)
+plt.show()
 
 # i = 1, j = 7 was the best
-# plt.scatter(df.iloc[:, 0], df.iloc[:, 6], c=df["label"].map(color_map), s=5)
-# plt.show()
+plt.scatter(df.iloc[:, 0], df.iloc[:, 6], c=df["label"].map(color_map), s=5)
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 7")
+plt.title("Relationship Between Select Features of Samples")
+plt.show()
 
-# transformer = GaussianRandomProjection(n_components=2, random_state=SEED)
-# df_random = transformer.fit_transform(df.iloc[:, :7])
+transformer = GaussianRandomProjection(n_components=2, random_state=SEED)
+df_random = transformer.fit_transform(df.iloc[:, :7])
 
 # the green is pretty clustered, but the red and blue are mixing significantly
 # when not seeding, there was an occasional good one, but most were pretty mixed up
-# plt.scatter(df_random[:, 0], df_random[:, 1], c=df["label"].map(color_map))
-# plt.show()
+plt.scatter(df_random[:, 0], df_random[:, 1], c=df["label"].map(color_map))
+plt.xlabel("PC1")
+plt.ylabel("PC2")
+plt.title("Sample Features Projected in 2 Dimensions by Gaussian Random Projection")
+plt.show()
 
-# reducer = umap.UMAP(random_state=SEED)
-# df_umap = reducer.fit_transform(df.iloc[:, :7])
-# # plt.scatter(df_umap[:, 0], df_umap[:, 1], c=df["label"].map(color_map))
-# plt.show()
+reducer = umap.UMAP(random_state=SEED)
+df_umap = reducer.fit_transform(df.iloc[:, :7])
+plt.scatter(df_umap[:, 0], df_umap[:, 1], c=df["label"].map(color_map))
+plt.xlabel("PC1")
+plt.ylabel("PC2")
+plt.title("Sample Features Projected in 2 Dimensions by UMAP")
+plt.show()
 
 kmeans = KMeans(n_clusters=3, random_state=SEED).fit(df)
 k_labels = kmeans.labels_
@@ -103,6 +115,10 @@ rand_index = same / ((pow(num_items, 2) - num_items) / 2)
 accuracy = num_correct_cluster / num_items
 
 
-linkage_matrix = linkage(df, method="ward", metric="euclidean")
-dendrogram(linkage_matrix)
+labels_arr = np.array(df["label"])
+linkage_matrix = linkage(df, method="complete", metric="euclidean")
+dendrogram(linkage_matrix, labels=labels_arr)
+plt.title("Dendrogram of Samples Clustered with Complete Linkage")
+plt.xlabel("Original Label in Dataset")
+plt.ylabel("Euclidean Distance")
 plt.show()
